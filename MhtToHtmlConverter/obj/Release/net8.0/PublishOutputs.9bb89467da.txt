@@ -1,0 +1,9 @@
+C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\bin\Release\net8.0\publish\MhtToHtmlConverter.exe
+C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\bin\Release\net8.0\publish\MhtToHtmlConverter.dll
+C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\bin\Release\net8.0\publish\MhtToHtmlConverter.deps.json
+C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\bin\Release\net8.0\publish\MhtToHtmlConverter.runtimeconfig.json
+C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\bin\Release\net8.0\publish\MhtToHtmlConverter.pdb
+C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\bin\Release\net8.0\publish\BouncyCastle.Cryptography.dll
+C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\bin\Release\net8.0\publish\MimeKit.dll
+C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\bin\Release\net8.0\publish\System.Security.Cryptography.Pkcs.dll
+C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\bin\Release\net8.0\publish\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll

@@ -1,0 +1,2 @@
+C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\bin\Release\net8.0\win-x64\publish\MhtToHtmlConverter.pdb
+C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\bin\Release\net8.0\win-x64\publish\MhtToHtmlConverter.exe
