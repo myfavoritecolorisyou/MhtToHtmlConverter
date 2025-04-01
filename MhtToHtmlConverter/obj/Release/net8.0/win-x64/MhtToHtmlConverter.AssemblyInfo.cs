@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MhtToHtmlConverter")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b4ead02f09bafc7f18a65e88de8590c46057bb66")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb8a5f5a3571a7a530029496e54c543cacbc3d53")]
 [assembly: System.Reflection.AssemblyProductAttribute("MhtToHtmlConverter")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MhtToHtmlConverter")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
