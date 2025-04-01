@@ -50,8 +50,17 @@ class Program
 
                 if (Path.GetExtension(file).Equals(".mht", StringComparison.OrdinalIgnoreCase))
                 {
-                    // MHT 파일 변환 후 .html로 저장
-                    outputFilePath = Path.Combine(outputFolder, Path.ChangeExtension(relativePath, ".html"));
+                    // 변환된 HTML 파일 경로
+                    string newFileName = Path.GetFileNameWithoutExtension(relativePath) + ".html";
+                    string newDirPath = Path.Combine(outputFolder, Path.GetDirectoryName(relativePath) ?? "");
+                    outputFilePath = Path.Combine(newDirPath, newFileName);
+
+                    // 변환된 HTML 파일을 저장할 폴더 생성
+                    if (!Directory.Exists(newDirPath))
+                    {
+                        Directory.CreateDirectory(newDirPath);
+                    }
+
                     ConvertMhtToHtml(file, outputFilePath);
                     Console.WriteLine($"변환 완료: {outputFilePath}");
                     successCount++;
@@ -61,6 +70,8 @@ class Program
                     // 다른 파일은 그대로 복사
                     outputFilePath = Path.Combine(outputFolder, relativePath);
                     string outputDir = Path.GetDirectoryName(outputFilePath);
+
+                    // 복사할 폴더가 없으면 생성
                     if (!Directory.Exists(outputDir))
                     {
                         Directory.CreateDirectory(outputDir);
@@ -81,6 +92,13 @@ class Program
 
     static void ConvertMhtToHtml(string mhtPath, string htmlPath)
     {
+        // 변환된 HTML 파일을 저장할 폴더가 없으면 생성
+        string outputDir = Path.GetDirectoryName(htmlPath);
+        if (!Directory.Exists(outputDir))
+        {
+            Directory.CreateDirectory(outputDir);
+        }
+
         var mhtMessage = MimeMessage.Load(mhtPath);
         var htmlBody = mhtMessage.HtmlBody;
 

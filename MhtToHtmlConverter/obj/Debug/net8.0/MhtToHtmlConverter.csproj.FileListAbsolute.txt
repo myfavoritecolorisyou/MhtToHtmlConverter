@@ -18,3 +18,4 @@ C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\obj\Debug\net8.
 C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\obj\Debug\net8.0\MhtToHtmlConverter.pdb
 C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\obj\Debug\net8.0\MhtToHtmlConverter.genruntimeconfig.cache
 C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\obj\Debug\net8.0\ref\MhtToHtmlConverter.dll
+C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\obj\Debug\net8.0\MhtToHtmlConverter.sourcelink.json
