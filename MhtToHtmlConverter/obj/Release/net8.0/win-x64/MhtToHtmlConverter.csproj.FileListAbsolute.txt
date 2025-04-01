@@ -199,3 +199,4 @@ C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\obj\Release\net
 C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\obj\Release\net8.0\win-x64\MhtToHtmlConverter.pdb
 C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\obj\Release\net8.0\win-x64\MhtToHtmlConverter.genruntimeconfig.cache
 C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\obj\Release\net8.0\win-x64\ref\MhtToHtmlConverter.dll
+C:\Users\user\source\repos\MhtToHtmlConverter\MhtToHtmlConverter\obj\Release\net8.0\win-x64\MhtToHtmlConverter.sourcelink.json
