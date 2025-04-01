@@ -88,6 +88,7 @@ class Program
         }
 
         Console.WriteLine($"변환 완료. MHT 변환: {successCount}개, 일반 파일 복사: {copyCount}개.");
+        Console.WriteLine("아무 키나 누르면 종료합니다...");
     }
 
     static void ConvertMhtToHtml(string mhtPath, string htmlPath)
