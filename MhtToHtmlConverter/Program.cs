@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using MimeKit;
 
 class Program
@@ -45,7 +46,7 @@ class Program
             try
             {
                 // 상대 경로 계산
-                string relativePath = file.Substring(inputFolder.Length + 1);
+                string relativePath = file[(inputFolder.Length + 1)..];
                 string outputFilePath;
 
                 if (Path.GetExtension(file).Equals(".mht", StringComparison.OrdinalIgnoreCase))
@@ -92,9 +93,8 @@ class Program
         Console.ReadKey();
     }
 
-    static void ConvertMhtToHtml(string mhtPath, string htmlPath)
+    private static void ConvertMhtToHtml(string mhtPath, string htmlPath)
     {
-        // 변환된 HTML 파일을 저장할 폴더가 없으면 생성
         string outputDir = Path.GetDirectoryName(htmlPath);
         if (!Directory.Exists(outputDir))
         {
@@ -102,14 +102,77 @@ class Program
         }
 
         var mhtMessage = MimeMessage.Load(mhtPath);
-        var htmlBody = mhtMessage.HtmlBody;
+        var htmlBody = mhtMessage.HtmlBody ?? throw new Exception("HTML 내용을 찾을 수 없습니다.");
 
-        if (string.IsNullOrEmpty(htmlBody))
+        var cidToBase64Map = new Dictionary<string, string>();
+        var locationToBase64Map = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var part in mhtMessage.BodyParts)
         {
-            throw new Exception("HTML 내용을 찾을 수 없습니다.");
-        }
+            if (part is MimePart mimePart)
+            {
+                using var ms = new MemoryStream();
+                mimePart.Content.DecodeTo(ms);
+                string base64 = Convert.ToBase64String(ms.ToArray());
+                string mime = mimePart.ContentType.MimeType;
 
-        // HTML 파일로 저장
+                // CID 처리
+                if (!string.IsNullOrEmpty(mimePart.ContentId))
+                {
+                    string cid = mimePart.ContentId.Trim('<', '>');
+                    cidToBase64Map[cid] = $"data:{mime};base64,{base64}";
+                }
+
+                // Content-Location 처리
+                if (mimePart.ContentLocation is not null)
+                {
+                    string location = mimePart.ContentLocation.ToString();
+                    locationToBase64Map[location] = $"data:{mime};base64,{base64}";
+                }
+            }
+        }
+        
+        htmlBody = cidToBase64Map.Aggregate(htmlBody, (current, kvp) => current.Replace($"cid:{kvp.Key}", kvp.Value));  // CID 이미지 대체
+        htmlBody = locationToBase64Map.Aggregate(htmlBody, (current, kvp) => current.Replace(kvp.Key, kvp.Value));      // Content-Location 이미지 대체
+        htmlBody = ReplaceFileSrcWithBase64(htmlBody); // file:/// 이미지 경로 처리
+
         File.WriteAllText(htmlPath, htmlBody);
+    }
+
+
+    // 파일 경로에서 base64 변환해 HTML에 반영
+    private static string ReplaceFileSrcWithBase64(string html)
+    {
+        const string pattern = @"<img[^>]+src\s*=\s*[""']file:///([^""']+)[""'][^>]*>";
+        return Regex.Replace(html, pattern, match =>
+        {
+            string fullPath = Uri.UnescapeDataString(match.Groups[1].Value);
+            if (!File.Exists(fullPath)) return match.Value; // 파일이 없으면 그대로 둠
+
+            try
+            {
+                // 파일을 읽어와서 base64로 인코딩
+                byte[] imageBytes = File.ReadAllBytes(fullPath);
+                string base64 = Convert.ToBase64String(imageBytes);
+                
+                // MIME 타입 결정
+                string extension = Path.GetExtension(fullPath).ToLower();
+                string mimeType = extension switch
+                {
+                    ".jpg" or ".jpeg" => "image/jpeg",
+                    ".png" => "image/png",
+                    ".gif" => "image/gif",
+                    ".bmp" => "image/bmp",
+                    _ => "application/octet-stream"
+                };
+                
+                string dataUri = $"data:{mimeType};base64,{base64}";
+                return Regex.Replace(match.Value, @"src\s*=\s*[""'][^""']+[""']", $"src=\"{dataUri}\"");
+            }
+            catch
+            {
+                return match.Value; // 오류 시 원본 유지
+            }
+        });
     }
 }
